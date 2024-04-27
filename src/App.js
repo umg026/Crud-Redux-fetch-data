@@ -1,10 +1,11 @@
 import React from 'react'
-import Data1 from './Data1'
+import Router from './routes/Router';
 
 function App() {
   return (
     <>
-    <Data1/>
+  <Router/>
+    
     </>
   )
 }
