@@ -1,29 +1,32 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchTodo } from './redux/slices/todoSlice'
+// import { fetchTodos } from './redux/slices/todoSlice'
+import { fetchData } from './redux/slices/pocketbase_Slice'
+
+
 
 function App() {
+  const { isLoading, data } = useSelector((state) => state.pocketbase);
   const dispatch = useDispatch()
-  const state = useSelector(state => state)
 
-  // console.log(state);
   useEffect(() => {
-    dispatch(fetchTodo())
+    dispatch(fetchData())
   }, [dispatch])
 
-  if (state.todo.isLoading) {
-    return <h1>Loading .......</h1>
+  if (isLoading) {
+    return <h1>loading .....</h1>
   }
 
   return (
-    <>
-     
+    <div>
       <ul>
-        {state.todo.data?.map((e) => (
-          <li key={e.id}>{e.title}</li>
+
+        {data?.map((e, i) => (
+          <li key={i}>{e.email}</li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }
 

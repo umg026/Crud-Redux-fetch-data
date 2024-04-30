@@ -1,31 +1,31 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const fetchTodo = createAsyncThunk("fetchTodo", async () => {
+export const fetchTodos = createAsyncThunk("fetchTodos", async () => {
     const response = await fetch("https://jsonplaceholder.typicode.com/todos")
     return response.json()
 })
 
-const todoSlice = createSlice({
-    name: "todo",
+export const todoSlice = createSlice({
+    name: " todo",
     initialState: {
-        isLoading: false,
-        data: null,
-        isError: false
+        isLoadong: false,
+        isError: false,
+        data: null
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchTodo.pending, (state, actions) => {
-            state.isLoading = true
-        });
-
-        builder.addCase(fetchTodo.fulfilled, (state, actions) => {
-            state.data = actions.payload;
-            state.isLoading = false;
-        });
-        
-    
-        builder.addCase(fetchTodo.rejected, (state, actions) => {
+          builder.addCase(fetchTodos.pending , (state)=>{
+            state.isLoadong = true
+            state.isError = false;
+          })
+          builder.addCase(fetchTodos.fulfilled , (state, actions)=>{
+            state.isLoadong = false 
+            state.data = actions.payload
+            console.log(state.data);
+          })
+          builder.addCase(fetchTodos.rejected , (state)=>{
             state.isError = true
-        });
+          })
+
     }
 })
 
