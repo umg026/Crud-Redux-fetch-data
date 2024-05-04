@@ -1,32 +1,44 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import pb from "../../pb/pb";
 
-export const fetchTodos = createAsyncThunk("fetchTodos", async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos")
-    return response.json()
+export const pocketData = createAsyncThunk("fetchData", async () => {
+
+    try {
+        const records = await pb.collection('users').getFullList();
+        // const filterdata = records.filter((item)=> item.type == "content_author")
+
+        return records
+
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+
 })
 
-export const todoSlice = createSlice({
-    name: " todo",
+
+const todoSlice = createSlice({
+    name: "todo",
     initialState: {
-        isLoadong: false,
+        isLoading: false,
         isError: false,
         data: null
     },
     extraReducers: (builder) => {
-          builder.addCase(fetchTodos.pending , (state)=>{
-            state.isLoadong = true
+        builder.addCase(pocketData.pending, (state) => {
+            state.isLoading = true;
             state.isError = false;
-          })
-          builder.addCase(fetchTodos.fulfilled , (state, actions)=>{
-            state.isLoadong = false 
-            state.data = actions.payload
-            console.log(state.data);
-          })
-          builder.addCase(fetchTodos.rejected , (state)=>{
-            state.isError = true
-          })
+        });
 
+        builder.addCase(pocketData.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.data = action.payload;
+        });
+
+        builder.addCase(pocketData.rejected, (state) => {
+            state.isLoading = false;
+            state.isError = true;
+        });
     }
 })
-
 export default todoSlice.reducer

@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import PocketBase from 'pocketbase';
+import pb from '../../pb/pb'
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+// const pb = new PocketBase('http://127.0.0.1:8090');
 
 export const fetchData = createAsyncThunk("fetchData", async () => {
    try {
@@ -9,7 +10,8 @@ export const fetchData = createAsyncThunk("fetchData", async () => {
            sort: '-created',
        });
        return records;
-   } catch (error) {
+   } 
+   catch (error) {
         console.error("Error fetching data:", error);
         throw error;
    }

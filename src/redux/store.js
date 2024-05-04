@@ -1,11 +1,12 @@
-import todoSlice from "./slices/todoSlice";
 import { configureStore } from "@reduxjs/toolkit";
-import  pocketSlicer  from "./slices/pocketbase_Slice";
-
+// import  pocketSlicer  from "./slices/pocketbase_Slice";
+// import userSlicer from "./slices/userSlicer";
+import todoSlice from "./slices/todoSlice";
 
 export const store = configureStore({
     reducer: {
-        pocketbase: pocketSlicer,
-        todo: todoSlice,
+        todo : todoSlice,
+        // pocketbase: pocketSlicer,
+        // users : userSlicer
     }
 });
