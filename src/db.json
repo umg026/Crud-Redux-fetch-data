@@ -1,0 +1,45 @@
+{
+    "items": [
+        {
+            "id": "1",
+            "collectionId": "jhdhehd",
+            "collectionName": "permissiions",
+            "created": "2022-01-01 01:00:00.123Z",
+            "updated": "2022-01-01 23:59:59.456Z",
+            "permi_name": "create",
+            "email": "test1@example.com",
+            "description": "dwhdwiujowjduhuywjwfhwyhdjo;wdjhwduq"
+        },
+        {
+            "id": "2",
+            "collectionId": "jhdhehd",
+            "collectionName": "permissiions",
+            "created": "2022-01-01 01:00:00.123Z",
+            "updated": "2022-01-01 23:59:59.456Z",
+            "permi_name": "view",
+            "email": "test2@example.com",
+            "description": "dwhdwiujowjduhuywjwfhwyhdjo;wdjhwduq"
+        }
+        ,
+        {
+            "id": "3",
+            "collectionId": "jhdhehd",
+            "collectionName": "permissiions",
+            "created": "2022-01-01 01:00:00.123Z",
+            "updated": "2022-01-01 23:59:59.456Z",
+            "permi_name": "review",
+            "email": "test4@example.com",
+            "description": "dwhdwiujowjduhuywjwfhwyhdjo;wdjhwduq"
+        },
+        {
+            "id": "4",
+            "collectionId": "jhdhehd",
+            "collectionName": "permissiions",
+            "created": "2022-01-01 01:00:00.123Z",
+            "updated": "2022-01-01 23:59:59.456Z",
+            "permi_name": "delete",
+            "email": "test7@example.com",
+            "description": "dwhdwiujowjduhuywjwfhwyhdjo;wdjhwduq"
+        }
+    ]
+}

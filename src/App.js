@@ -7,34 +7,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Admin_profile from './pages/Admin_profile';
+import EditProfile from './pages/EditProfile';
+import Search from './search_input_add/Search';
+import Input_suggestion_post from './input_suggestion/Input_suggestion_post';
 
 
 function App() {
-  // const { isLoading, data } = useSelector((state) => state.pocketbase);
-  // const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   dispatch(fetchData())
-  // }, [dispatch])
-
-  // if (isLoading) {
-  //   return <h1>loading .....</h1>
-  // }
-
   return (
-    // <div>
-    //   <ul>
-
-    //     {data?.map((e, i) => (
-    //       <li key={i}>{e.email}</li>
-    //     ))}
-    //   </ul>
-    // </div>
+  
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/admin/profile" element={<Admin_profile />} />
+      <Route path="/admin/profile/edit/:id" element={<EditProfile />} />
+      <Route path="/search" element={<Search />} />
+      <Route path="/input" element={<Input_suggestion_post />} />
       
     </Routes>
   </BrowserRouter>

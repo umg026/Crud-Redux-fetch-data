@@ -24,6 +24,15 @@ const todoSlice = createSlice({
         isError: false,
         data: null
     },
+    reducers: {
+        pocketData: (state, action) => {
+          // Assuming action.payload contains the fetched data
+          state.data = action.payload;
+        },
+        filterData: (state, action) => {
+          state.data = action.payload;
+        }},
+
     extraReducers: (builder) => {
         builder.addCase(pocketData.pending, (state) => {
             state.isLoading = true;

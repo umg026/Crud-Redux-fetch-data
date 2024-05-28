@@ -1,135 +1,115 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import Loader from '../loader/Loader';
-// import { userData } from '../../redux/Users/Users';
+import React, { useEffect, useState } from 'react'
+import { AiOutlineClose } from 'react-icons/ai'
+import { Link } from 'react-router-dom';
 
 function Admin_profile() {
-  const dispatch = useDispatch();
-  const { isLoading, data } = useSelector(state => state.userData);
+
+  const [edit, setEdit] = useState(false)
+  const [data, setData] = useState(null);
+
 
   useEffect(() => {
-    // dispatch(userData());
-  }, [dispatch]);
+    const localStorageData = localStorage.getItem("pocketbase_auth");
 
-  // State for pagination
-  const [currentPage, setCurrentPage] = useState(1);
-
-  // Handling loading state
-  if (isLoading) {
-    // return <div className="flex justify-center items-center h-[100vh]"> <Loader /></div>;
-  }
-
-  // Pagination logic
-  const recordsPerPage = 5;
-  const firstIndex = (currentPage - 1) * recordsPerPage;
-  const lastIndex = currentPage * recordsPerPage;
-  const records = data?.slice(firstIndex, lastIndex);
-  const totalPages = Math.ceil(data?.length / recordsPerPage);
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-
-  function prevPage() {
-    setCurrentPage(prevPage => (prevPage > 1 ? prevPage - 1 : prevPage));
-  }
-
-  function nextPage() {
-    setCurrentPage(prevPage => (prevPage < totalPages ? prevPage + 1 : prevPage));
-  }
-
-  function changePage(id) {
-    setCurrentPage(id);
-  }
+    if (localStorageData) {
+      const parsedData = JSON.parse(localStorageData);
+      setData(parsedData);
+    }
+  }, []);
 
   return (
     <div>
-      <div className="flex flex-col">
-        <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="overflow-hidden">
-              <table className="min-w-full">
-                <thead className="bg-gray-100 border-b">
-                  <tr>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Id
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      User Name
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      email
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Type
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Image
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Created
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {records && records.map((item, index) => (
-                    <tr key={index} className="bg-white border-b transition duration-300 ease-in-out capitalize hover:bg-gray-100">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
-                      <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">{item.username}</td>
-                      <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">{item.email}</td>
-                      <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">{item.name}</td>
-                      <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap w-6">
-                        <img src={item.avatar} alt="not found" />
-                      </td>
-                      <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">{item.created}</td>
-                      <td className="p-3 flex">
-                        <button type="button" className="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Review</button>
-                        <button type="button" className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      {/* component */}
+      {/* This is an example component */}
+      {data && (
+        <div>
+          <h1 className='text-3xl'>Email: {data.model.email}</h1>
 
+          <div className="h-full">
+            <div className="border-b-2 block md:flex">
+              <div className="w-full md:w-2/5 p-4 sm:p-6 lg:p-8 bg-white shadow-md">
+                <div className="flex justify-between">
+                  <span className="text-xl font-semibold block">Admin Profile</span>
+                </div>
+                <span className="text-gray-600">This information is secret so be careful</span>
+                <div className="w-full p-8 mx-2 flex justify-center">
+                  <img id="showImage" className="max-w-xs w-32 items-center border" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200" alt />
+                </div>
+              </div>
+              <div className="w-full md:w-3/5 p-8 bg-white lg:ml-4 shadow-md">
+                <div className="rounded  shadow p-6">
+                  <div className="pb-6">
+                    <label htmlFor="name" className="font-semibold text-gray-700 block pb-1">Name</label>
+                    <div className="flex">
+                      <span className="border-1 rounded-r px-4 py-2 w-full">{data.model.username}</span>
+                    </div>
+                  </div>
+                  <div className="pb-4">
+                    <label htmlFor="about" className="font-semibold text-gray-700 block pb-1">Email</label>
+                    <div className="flex">
+                      <span className="border-1 rounded-r px-4 py-2 w-full">{data.model.email}</span>
+                    </div>
+                  </div>
+                  <div className="pb-4">
+                    <Link className='px-4 py-2 text-white bg-green-500' to={`edit/${data.model.id}`}>Edit </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Pagination */}
-      <div className="flex w-full mt-16 justify-center items-center gap-3">
-        <button
-          onClick={prevPage}
-          disabled={currentPage === 1}
-          className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-          </svg>
-          Previous
-        </button>
-        {pageNumbers.map(number => (
-          <button
-            key={number}
-            onClick={() => changePage(number)}
-            className={`flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 ${currentPage === number ? 'bg-gray-900/10' : ''}`}
-          >
-            {number}
-          </button>
-        ))}
-        <button
-          onClick={nextPage}
-          disabled={currentPage === totalPages}
-          className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        >
-          Next
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </button>
-      </div>
+      )}
+      {/* edit form  */}
+      {/* {edit ? <div onClick={() => setEdit(!edit)} className='bg-black/80 fixed w-full h-screen z-10 top-0 left-0'></div> : ''}
+
+      <div className={edit ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-full bg-white z-10 duration-300' : 'absolute top-0 left-[-100%] w-[300px] h-full bg-white z-10 duration-300'}>
+        <AiOutlineClose onClick={() => setEdit(!edit)} size={30} className='absolute right-4 top-4 cursor-pointer' />
+
+        <h2 className='text-2xl p-4'>
+          Edit Profile
+        </h2>
+
+        <div className="">
+          <form action="">
+            <div className="px-3 mb-3">
+              <label htmlFor="" className='font-semibold '>User name:</label>
+              <div>
+                <input type="text" className='border-blue-600 mt-2 outline-black p-1 focus:border-black' />
+              </div>
+            </div>
+            <div className="px-3 mb-3">
+              <label htmlFor="" className='font-semibold '>Email</label>
+              <div>
+                <input type="text" className='border-blue-600 mt-2 outline-black p-1 focus:border-black' />
+              </div>
+            </div>
+            <div className="px-3 mb-3">
+              <label htmlFor="" className='font-semibold '>Change Password:</label>
+              <div>
+                <input type="text" className='border-blue-600 mt-2 outline-black p-1 focus:border-black' />
+              </div>
+            </div>
+            <div className="px-3 mb-3">
+              <label htmlFor="" className='font-semibold '>Confirm Password:</label>
+              <div>
+                <input type="text" className='border-blue-600 mt-2 outline-black p-1 focus:border-black' />
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <div className="flex gap-4 px-3">
+          <button className='px-4 py-2 text-white bg-blue-500 rounded' >Update</button>
+          <button className='py-2 text-blue-950 font-semibold ' onClick={() => setEdit(!edit)}>Close</button>
+
+        </div>
+      </div> */}
+
+
     </div>
-  );
+  )
 }
 
-export default Admin_profile;
+export default Admin_profile

@@ -7,22 +7,20 @@ import { pocketData } from '../redux/slices/todoSlice'
 
 function Dashboard() {
   const dispatch = useDispatch()
-  const { isLoading, data } = useSelector(state => state.todo)
-  const [currentPage, setCurentPage] = useState(1)
-  const [searchQuery, setSearchQuery] = useState('');
+  const { data } = useSelector(state => state.todo)
+  const [currentPage, setCurentPage] = useState(1) // for pagination state
+  const [searchQuery, setSearchQuery] = useState(''); // searching state
 
 
   useEffect(() => {
-    dispatch(pocketData(searchQuery))
-  }, [dispatch, searchQuery])
+    dispatch(pocketData())
+  }, [dispatch])
 
-  if (isLoading) {
-    return <h1>loading ......</h1>
-  }
+
   // pagination 
   const recordsPerPage = 3;
-  const filteredData = data?.filter(item =>
-    item.email.toLowerCase().includes(searchQuery.toLowerCase())
+
+  const filteredData = data?.filter(item => item.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
 
@@ -47,16 +45,33 @@ function Dashboard() {
     setCurentPage(Id)
   }
 
+const handelFilter =()=>{
+  const filteredData = data?.filter(item => item.status == "active")
+  dispatch(pocketData());
+  
+ return filteredData
+
+}
+
 
   return (
     <div>
       <input
-        type="text" className='mx-20'
+        type="text" className='mx-20 border-black border p-2 mb-5 outline-2'
         value={searchQuery} autoFocus
         onChange={e => setSearchQuery(e.target.value)}
         placeholder="Enter search query"
       />
-      <button onClick={handleSearch}>Search</button>
+
+      <button onClick={handleSearch} className='px-2 rounded shadow-lg font-bold bg-green-300 '>Search</button>
+      <br />
+      
+      <div>
+        <button
+        onClick={handelFilter}
+        className='px-3 rounded shadow-xl mx-5 py-1 bg-blue-400 text-white'>Active</button>
+
+      </div>
 
       {/* ====================== */}
       <table className="table container">
@@ -65,7 +80,7 @@ function Dashboard() {
             <th>no.</th>
             <th>email</th>
             <th>type</th>
-            <th>collection</th>
+            <th>status</th>
           </tr>
         </thead>
         <tbody>
@@ -76,7 +91,7 @@ function Dashboard() {
                   <td>{item.id}</td>
                   <td>{item.email}</td>
                   <td>{item.type}</td>
-                  <td>{item.collectionName}</td>
+                  <td>{item.status}</td>
                 </tr>
               )
             })
@@ -84,8 +99,8 @@ function Dashboard() {
         </tbody>
       </table>
       <div className="flex">
-        <button className='px-4 bg-green-600 text-white'
-          onClick={prevPage} disabled={currentPage === 1}
+        <button className={currentPage === 1 ? "bg-gray-300 text-white rounded px-4" : "px-4 bg-green-600 text-white"}
+          onClick={prevPage}
         >Prev</button>
 
         {
@@ -98,8 +113,8 @@ function Dashboard() {
         }
 
 
-        <button className='px-4 bg-green-600 text-white'
-          onClick={nextPage} disabled={currentPage === totoalPages}
+        <button className={currentPage === totoalPages ? "bg-gray-300 text-white rounded px-4" : 'px-4 bg-green-600 text-white'}
+          onClick={nextPage}
         >Next</button>
       </div>
     </div>
